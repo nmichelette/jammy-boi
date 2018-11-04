@@ -14,3 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GameOver.unity
     guid: 61a871a63ae8319498373ba1c617f995
+  - enabled: 1
+    path: Assets/Finalboss.unity
+    guid: 771f46e449756824b80017a1aded65d9
+  m_configObjects: {}

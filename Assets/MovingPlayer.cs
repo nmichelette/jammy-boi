@@ -128,7 +128,7 @@ public class MovingPlayer : MonoBehaviour {
 
     // Use this for initialization
     void Start ()
-    {
+    { 
         rigid = GetComponent<Rigidbody2D>();
         script = FindObjectOfType<Lives>();
         MaxHealth = health;

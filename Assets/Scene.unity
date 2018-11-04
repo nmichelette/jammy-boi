@@ -33941,7 +33941,7 @@ MonoBehaviour:
   - {fileID: 1650284555}
   - {fileID: 660350238}
   enemy: {fileID: 1903814366241072, guid: dd3538fa8973a8d4e95d2b1983b82ba5, type: 2}
-  timeUntilSpawn: 150
+  timeUntilSpawn: 10
   Counter: {fileID: 1046949372}
 --- !u!4 &701028656
 Transform:
@@ -48984,6 +48984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: {fileID: 376658045}
+  transportToBoss: 0
 --- !u!4 &970726366
 Transform:
   m_ObjectHideFlags: 0
