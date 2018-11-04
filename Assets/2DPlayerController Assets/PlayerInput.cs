@@ -27,8 +27,11 @@ public class PlayerInput : MonoBehaviour {
 	void Update ()
     {
         var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Quaternion rot = Quaternion.LookRotation(transform.position - mousePosition, Vector3.forward);
 
+        float mag = (float)Math.Sqrt(Math.Pow(transform.position.x - mousePosition.x, 2) + Math.Pow(transform.position.y - mousePosition.y, 2));
+        Vector3 rota = new Vector3((transform.position.x - mousePosition.x) / mag, (transform.position.y - mousePosition.y) / mag, 10);
+        Quaternion rot = Quaternion.LookRotation(rota, Vector3.forward);
+        Debug.Log(transform.position - mousePosition);
         transform.rotation = rot;
         transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 
@@ -37,7 +40,7 @@ public class PlayerInput : MonoBehaviour {
         if (Input.GetButton("Fire1") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-                laser.Play();
+            laser.Play();
             Instantiate(Shot, shotSpawn.position, shotSpawn.rotation);
         }
 

@@ -11,6 +11,8 @@ public class MovingPlayer : MonoBehaviour {
 
     public float health;
 
+    public float maxHealth;
+
     public float speed;
 
     Rigidbody2D rigid;
