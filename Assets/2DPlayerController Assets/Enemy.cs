@@ -7,12 +7,15 @@ public class Enemy : MonoBehaviour {
     public GameObject Shot;
     public Transform shotSpawn;
 
-    private float nextFire;
+    private float nextFire, randtemp;
 
     public float fireRate;
+    private bool isInvis;
 
     public float speed;
+    float z;
 
+    MovingPlayer player2;
     Transform player;
     Rigidbody2D rigid;
 
@@ -25,8 +28,10 @@ public class Enemy : MonoBehaviour {
 	void Start ()
     {
         player = FindObjectOfType<PlayerInput>().gameObject.transform;
+        player2 = FindObjectOfType<MovingPlayer>();
         rigid = GetComponent<Rigidbody2D>();
         score = FindObjectOfType<Score>();
+        isInvis = false;
 	}
 	
 	// Update is called once per frame
@@ -36,7 +41,16 @@ public class Enemy : MonoBehaviour {
         player = FindObjectOfType<PlayerInput>().gameObject.transform;
         rigid = GetComponent<Rigidbody2D>();
 
-        float z = Mathf.Atan2((player.transform.position.y - transform.position.y), (player.transform.position.x - transform.position.x)) * Mathf.Rad2Deg - 90;
+        
+        if (player2.Invis)
+        {
+            z = randtemp*360;
+        }
+        else
+        {
+            randtemp = Random.value;
+            z = Mathf.Atan2((player.transform.position.y - transform.position.y), (player.transform.position.x - transform.position.x)) * Mathf.Rad2Deg - 90;
+        }
         transform.eulerAngles = new Vector3(0, 0, z);
 
         rigid.AddForce(gameObject.transform.up * speed);

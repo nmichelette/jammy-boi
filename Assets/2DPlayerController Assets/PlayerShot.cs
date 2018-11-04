@@ -7,6 +7,8 @@ public class PlayerShot : MonoBehaviour {
     Rigidbody2D rigid;
     public float speed;
     public float damage;
+    MovingPlayer player;
+    private float baseDamage;
 
     float counter;
     public float TimeUntilDeleted;
@@ -16,6 +18,8 @@ public class PlayerShot : MonoBehaviour {
     {
         counter = TimeUntilDeleted;
         rigid = GetComponent<Rigidbody2D>();
+        player = FindObjectOfType<MovingPlayer>();
+        baseDamage = damage;
 	}
 	
 	// Update is called once per frame
@@ -27,6 +31,12 @@ public class PlayerShot : MonoBehaviour {
             Destroy(gameObject);
         rigid.velocity = transform.up * speed;
 
+        if (player.MoreDmg)
+        {
+            damage = baseDamage * 1.4f;
+        }
+        else
+            damage = baseDamage;
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -37,6 +47,12 @@ public class PlayerShot : MonoBehaviour {
             script.health -= damage;
 
             Destroy(gameObject);
+        }
+        if(collision.tag == "Tile")
+        {
+            Debug.Log(collision.GetComponent<Tile>().getColor().Equals(Color.gray));
+            if (collision.GetComponent<Tile>().getColor().Equals(Color.gray))
+                Destroy(gameObject);
         }
     }
 

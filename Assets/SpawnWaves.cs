@@ -27,13 +27,10 @@ public class SpawnWaves : MonoBehaviour {
 
         if(timeUntilSpawnCounter <= 0)
         {
-            Debug.Log("Step 0");
             for (int i = 0; i < 2; i++)
             {
-                Debug.Log("Step 1");
                 if (FindObjectsOfType<Enemy>().Length < 10)
                 {
-                    Debug.Log("Step 2");
                     int location = Random.Range(0, 4);
                     Instantiate(enemy, spawnLocations[location].transform.position, spawnLocations[location].transform.rotation);
                 }

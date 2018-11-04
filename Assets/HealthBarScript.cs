@@ -14,7 +14,7 @@ public class HealthBarScript : MonoBehaviour {
     void Start () {
         healthBar = GetComponent<Image>();
         script = FindObjectOfType<MovingPlayer>();
-        maxHealth = script.maxHealth;
+        maxHealth = script.MaxHealth;
 	}
 	
 	// Update is called once per frame

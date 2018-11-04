@@ -42,5 +42,10 @@ public class EnemyShot : MonoBehaviour
 
             Destroy(gameObject);
         }
+        if (collision.tag == "Tile")
+        {
+            if (collision.GetComponent<Tile>().getColor().Equals(Color.gray))
+                Destroy(gameObject);
+        }
     }
 }
