@@ -19,8 +19,10 @@ public class MovingPlayer : MonoBehaviour {
 
     Lives script;
 
-	// Use this for initialization
-	void Start ()
+    public AudioSource hurtSound;
+
+    // Use this for initialization
+    void Start ()
     {
         rigid = GetComponent<Rigidbody2D>();
         script = FindObjectOfType<Lives>();
