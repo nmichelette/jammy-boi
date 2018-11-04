@@ -36,10 +36,11 @@ public class EnemyShot : MonoBehaviour
         {
             MovingPlayer script = collision.GetComponent<MovingPlayer>();
             script.health -= damage;
+            script.hurtSound.Play();
+            ShakeScript sk = FindObjectOfType<ShakeScript>();
+            sk.shakeScreen();
 
             Destroy(gameObject);
         }
     }
-
-
 }
