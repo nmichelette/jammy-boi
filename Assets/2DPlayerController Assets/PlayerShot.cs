@@ -54,6 +54,14 @@ public class PlayerShot : MonoBehaviour {
             if (collision.GetComponent<Tile>().getColor().Equals(Color.gray))
                 Destroy(gameObject);
         }
+
+        if (collision.tag == "Boss")
+        {
+            BossScript script = collision.GetComponent<BossScript>();
+            script.health -= damage;
+
+            Destroy(gameObject);
+        }
     }
 
 

@@ -11,26 +11,29 @@ public class BossScript : MonoBehaviour
 
     public GameObject Shot;
     public Transform shotSpawn;
-
     private float nextFire;
-
     public float fireRate;
-
-    public float speed;
-
     Transform player;
     Rigidbody2D rigid;
-
     public float health;
-
     Score score;
-
     public int amountOfScore;
 
     Animator anim;
+    public int counterUntilPhaseChange;
+    public int phase1Length;
+    public int phase2Length;
+    public int phase3Length;
+    public GameObject[] BossSpawns;
+
+    public GameObject theBoss;
+    public float speed;
+    bool isright;
+
     // Use this for initialization
     void Start()
     {
+        counterUntilPhaseChange = 0;
         player = FindObjectOfType<PlayerInput>().gameObject.transform;
         rigid = GetComponent<Rigidbody2D>();
         score = FindObjectOfType<Score>();
@@ -58,17 +61,17 @@ public class BossScript : MonoBehaviour
                StartCoroutine(Phase1Attack());
                 break;
             case FightingStages.Phase2:
-                Phase2Attack();
+                StartCoroutine(Phase2Attack());
                 break;
             case FightingStages.Phase3:
-                Phase3Attack();
+                StartCoroutine(Phase3Attack());
                 break;
 
         }
 
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Destroy(theBoss);
             score.KilledEnemy(amountOfScore);
         }
 
@@ -79,23 +82,41 @@ public class BossScript : MonoBehaviour
      //   }
     }
 
-    private void Phase3Attack()
+    IEnumerator Phase3Attack()
     {
+        yield return new WaitForSeconds(.65f);
         phaseon = true;
 
     }
 
-    private void Phase2Attack()
+    IEnumerator Phase2Attack()
     {
-        phaseon = true;
+        theBoss.transform.Translate(-speed * Time.deltaTime, 0, 0);
+        for (int i = 0; i < BossSpawns.Length; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            Instantiate(Shot, BossSpawns[i].gameObject.transform.position, BossSpawns[i].gameObject.transform.rotation);
+        }
+
+        if (counterUntilPhaseChange == phase2Length)
+        {
+            counterUntilPhaseChange = 0;
+            stage = FightingStages.Phase3;
+        }
+        counterUntilPhaseChange++;
     }
 
     IEnumerator Phase1Attack()
     {
-        //phaseon = true;
-
-        yield return new WaitForSeconds(.25f);
-
+        theBoss.transform.Translate(speed * Time.deltaTime, 0, 0);
+        yield return new WaitForSeconds(1f);
         Instantiate(Shot, shotSpawn.position, shotSpawn.rotation);
+        if (counterUntilPhaseChange == phase1Length)
+        {
+            counterUntilPhaseChange = 0;
+            stage = FightingStages.Phase2;
+        }
+        counterUntilPhaseChange++;
+
     }
 }
