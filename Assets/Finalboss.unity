@@ -2618,7 +2618,7 @@ Prefab:
     - target: {fileID: 114495530119829314, guid: 2d986ea1d8c6494419bc17d8affe9834,
         type: 2}
       propertyPath: health
-      value: 250000
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 4211440879825814, guid: 2d986ea1d8c6494419bc17d8affe9834, type: 2}
       propertyPath: m_LocalScale.x
@@ -2635,7 +2635,7 @@ Prefab:
     - target: {fileID: 114111743445286038, guid: 2d986ea1d8c6494419bc17d8affe9834,
         type: 2}
       propertyPath: fireRate
-      value: 0.001
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d986ea1d8c6494419bc17d8affe9834, type: 2}
