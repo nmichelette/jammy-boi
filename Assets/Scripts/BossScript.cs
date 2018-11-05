@@ -9,6 +9,11 @@ public class BossScript : MonoBehaviour
     FightingStages stage;
     bool phaseon;
 
+    bool halfHp;
+    private float maxHealth;
+    BoxCollider2D coll;
+    private int direction;
+    private float direction2;
     public GameObject Shot;
     public Transform shotSpawn;
     private float nextFire;
@@ -18,7 +23,7 @@ public class BossScript : MonoBehaviour
     public float health;
     Score score;
     public int amountOfScore;
-
+    GameObject x;
     Animator anim;
     public int counterUntilPhaseChange;
     public int phase1Length;
@@ -30,14 +35,32 @@ public class BossScript : MonoBehaviour
     public float speed;
     bool isright;
 
+    public float MaxHealth
+    {
+        get
+        {
+            return maxHealth;
+        }
+
+        set
+        {
+            maxHealth = value;
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
         counterUntilPhaseChange = 0;
         player = FindObjectOfType<PlayerInput>().gameObject.transform;
-        rigid = GetComponent<Rigidbody2D>();
+        //rigid = GetComponent<Rigidbody2D>();
         score = FindObjectOfType<Score>();
         anim = GetComponent<Animator>();
+        coll = GetComponent<BoxCollider2D>();
+        direction = 1;
+        direction2 = UnityEngine.Random.Range(-1f, 1f);
+        maxHealth = health;
+        halfHp = false;
     }
 
     // Update is called once per frame
@@ -47,14 +70,21 @@ public class BossScript : MonoBehaviour
         {
             return;
         }
+
+        halfHp = health < maxHealth / 2;
+
         player = FindObjectOfType<PlayerInput>().gameObject.transform;
-        rigid = GetComponent<Rigidbody2D>();
 
         float z = Mathf.Atan2((player.transform.position.y - transform.position.y), (player.transform.position.x - transform.position.x)) * Mathf.Rad2Deg - 90;
         transform.eulerAngles = new Vector3(0, 0, z);
 
         //rigid.AddForce(gameObject.transform.up * speed);
-
+        theBoss.transform.Translate(direction * speed * Time.deltaTime, 0, 0);
+        if(halfHp)
+        {
+            theBoss.transform.Translate(0, direction2 * speed * Time.deltaTime, 0);
+        }
+        Debug.Log("halfHP: " + halfHp);
         switch (stage)
         {
             case FightingStages.Phase1:
@@ -91,32 +121,70 @@ public class BossScript : MonoBehaviour
 
     IEnumerator Phase2Attack()
     {
-        theBoss.transform.Translate(-speed * Time.deltaTime, 0, 0);
+
+        
+        
         for (int i = 0; i < BossSpawns.Length; i++)
         {
             yield return new WaitForSeconds(1f);
             Instantiate(Shot, BossSpawns[i].gameObject.transform.position, BossSpawns[i].gameObject.transform.rotation);
         }
-
-        if (counterUntilPhaseChange == phase2Length)
+        
+        if (coll.transform.position.x>13||coll.transform.position.x<-13)
         {
-            counterUntilPhaseChange = 0;
-            stage = FightingStages.Phase3;
+            //counterUntilPhaseChange = 0;
+            if (UnityEngine.Random.value < .5)
+                stage = FightingStages.Phase2;
+            else
+                stage = FightingStages.Phase1;
+            direction = -1 * direction;
+            StopAllCoroutines();
         }
-        counterUntilPhaseChange++;
+        if (halfHp)
+        {
+            if (coll.transform.position.y > 9.5 || coll.transform.position.y < -9.5)
+            {
+               // counterUntilPhaseChange = 0;
+               // if (UnityEngine.Random.value < .5)
+                //    stage = FightingStages.Phase2;
+                //else
+               //     stage = FightingStages.Phase1;
+                direction2 = -1 * direction2 / Mathf.Abs(direction2) * UnityEngine.Random.value;
+                //StopAllCoroutines();
+            }
+        }
+        //counterUntilPhaseChange++;
     }
 
     IEnumerator Phase1Attack()
     {
-        theBoss.transform.Translate(speed * Time.deltaTime, 0, 0);
+        //theBoss.transform.Translate(direction*speed * Time.deltaTime, 0, 0);
         yield return new WaitForSeconds(1f);
         Instantiate(Shot, shotSpawn.position, shotSpawn.rotation);
-        if (counterUntilPhaseChange == phase1Length)
+        if (coll.transform.position.x > 13 || coll.transform.position.x < -13)
         {
             counterUntilPhaseChange = 0;
-            stage = FightingStages.Phase2;
+            direction = -1 * direction;
+            if (UnityEngine.Random.value < .5)
+                stage = FightingStages.Phase2;
+            else
+                stage = FightingStages.Phase1;
         }
-        counterUntilPhaseChange++;
+        if (halfHp)
+        {
+            if (coll.transform.position.y > 9.5)
+            {
+                // counterUntilPhaseChange = 0;
+                //if (UnityEngine.Random.value < .5)
+                //    stage = FightingStages.Phase2;
+                //else
+                //    stage = FightingStages.Phase1;
+                direction2 = UnityEngine.Random.Range(-1f, -4f);
+            }
+            if (coll.transform.position.y < -9.5)
+                direction2 = UnityEngine.Random.Range(.4f, 1f);
+        }
+        //counterUntilPhaseChange++;
 
     }
 }

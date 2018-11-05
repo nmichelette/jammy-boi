@@ -19,8 +19,8 @@ public class ShakeScript : MonoBehaviour {
     public void shakeScreen()
     {
         Vector3 cameraPos = m_cam.transform.position;
-        float shakeX = Random.value + cameraPos.x;
-        float shakeY = Random.value + cameraPos.y;
+        float shakeX = Random.Range(-.2f, .2f) + cameraPos.x;
+        float shakeY = Random.Range(-.2f, .2f) + cameraPos.y;
         cameraPos.x += shakeX;
         cameraPos.y += shakeY;
         m_cam.transform.position = cameraPos;
@@ -29,7 +29,7 @@ public class ShakeScript : MonoBehaviour {
 
     private IEnumerator goBack()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         m_cam.transform.position = new Vector3(0, 0, -10);
     }
 }
