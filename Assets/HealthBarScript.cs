@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class HealthBarScript : MonoBehaviour {
 
     Image healthBar;
-    float maxHealth;
     MovingPlayer script;
 
 
@@ -14,11 +13,14 @@ public class HealthBarScript : MonoBehaviour {
     void Start () {
         healthBar = GetComponent<Image>();
         script = FindObjectOfType<MovingPlayer>();
-        maxHealth = script.MaxHealth;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        healthBar.fillAmount = script.health / maxHealth;
+        healthBar.fillAmount = script.health / script.MaxHealth;
 	}
+    public void SetPlayer()
+    {
+        script = FindObjectOfType<MovingPlayer>();
+    }
 }

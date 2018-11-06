@@ -79,10 +79,15 @@ public class BossScript : MonoBehaviour
         transform.eulerAngles = new Vector3(0, 0, z);
 
         //rigid.AddForce(gameObject.transform.up * speed);
-        theBoss.transform.Translate(direction * speed * Time.deltaTime, 0, 0);
-        if(halfHp)
+        if(direction==1&&theBoss.transform.position.x<13)
+            theBoss.transform.Translate(speed * Time.deltaTime, 0, 0);
+        if(direction==-1&& theBoss.transform.position.x > -13)
+            theBoss.transform.Translate(-speed * Time.deltaTime, 0, 0);
+        if (halfHp)
         {
-            theBoss.transform.Translate(0, direction2 * speed * Time.deltaTime, 0);
+            speed = 5;
+            if(theBoss.transform.position.y > -9.6 && theBoss.transform.position.y<9.6)
+                theBoss.transform.Translate(0, direction2 * speed * Time.deltaTime, 0);
         }
         Debug.Log("halfHP: " + halfHp);
         switch (stage)
@@ -122,15 +127,7 @@ public class BossScript : MonoBehaviour
     IEnumerator Phase2Attack()
     {
 
-        
-        
-        for (int i = 0; i < BossSpawns.Length; i++)
-        {
-            yield return new WaitForSeconds(1f);
-            Instantiate(Shot, BossSpawns[i].gameObject.transform.position, BossSpawns[i].gameObject.transform.rotation);
-        }
-        
-        if (coll.transform.position.x>13||coll.transform.position.x<-13)
+        if (coll.transform.position.x > 13 || coll.transform.position.x < -13)
         {
             //counterUntilPhaseChange = 0;
             if (UnityEngine.Random.value < .5)
@@ -142,26 +139,33 @@ public class BossScript : MonoBehaviour
         }
         if (halfHp)
         {
-            if (coll.transform.position.y > 9.5 || coll.transform.position.y < -9.5)
+            if (coll.transform.position.y > 9.5)
             {
-               // counterUntilPhaseChange = 0;
-               // if (UnityEngine.Random.value < .5)
+                // counterUntilPhaseChange = 0;
+                //if (UnityEngine.Random.value < .5)
                 //    stage = FightingStages.Phase2;
                 //else
-               //     stage = FightingStages.Phase1;
-                direction2 = -1 * direction2 / Mathf.Abs(direction2) * UnityEngine.Random.value;
-                //StopAllCoroutines();
+                //    stage = FightingStages.Phase1;
+                direction2 = UnityEngine.Random.Range(-1f, -.4f);
             }
+            if (coll.transform.position.y < -9.5)
+                direction2 = UnityEngine.Random.Range(.4f, 1f);
         }
+
+        for (int i = 0; i < BossSpawns.Length; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            Instantiate(Shot, BossSpawns[i].gameObject.transform.position, BossSpawns[i].gameObject.transform.rotation);
+        }
+        
+        
+        
         //counterUntilPhaseChange++;
     }
 
     IEnumerator Phase1Attack()
     {
-        //theBoss.transform.Translate(direction*speed * Time.deltaTime, 0, 0);
-        yield return new WaitForSeconds(1f);
-        Instantiate(Shot, shotSpawn.position, shotSpawn.rotation);
-        if (coll.transform.position.x > 13 || coll.transform.position.x < -13)
+        if (coll.transform.position.x > 13 || (coll.transform.position.x < -13))
         {
             counterUntilPhaseChange = 0;
             direction = -1 * direction;
@@ -169,6 +173,7 @@ public class BossScript : MonoBehaviour
                 stage = FightingStages.Phase2;
             else
                 stage = FightingStages.Phase1;
+            StopAllCoroutines();
         }
         if (halfHp)
         {
@@ -179,11 +184,15 @@ public class BossScript : MonoBehaviour
                 //    stage = FightingStages.Phase2;
                 //else
                 //    stage = FightingStages.Phase1;
-                direction2 = UnityEngine.Random.Range(-1f, -4f);
+                direction2 = UnityEngine.Random.Range(-1f, -.4f);
             }
             if (coll.transform.position.y < -9.5)
                 direction2 = UnityEngine.Random.Range(.4f, 1f);
         }
+        //theBoss.transform.Translate(direction*speed * Time.deltaTime, 0, 0);
+        yield return new WaitForSeconds(1f);
+        Instantiate(Shot, shotSpawn.position, shotSpawn.rotation);
+        
         //counterUntilPhaseChange++;
 
     }

@@ -33,6 +33,7 @@ public class MovingPlayer : MonoBehaviour {
     private bool invis;
     private bool moreShots;
     private bool moreSpeed;
+    private bool moreFireRate;
 
     public bool Regen
     {
@@ -123,6 +124,19 @@ public class MovingPlayer : MonoBehaviour {
         set
         {
             moreSpeed = value;
+        }
+    }
+
+    public bool MoreFireRate
+    {
+        get
+        {
+            return moreFireRate;
+        }
+
+        set
+        {
+            moreFireRate = value;
         }
     }
 

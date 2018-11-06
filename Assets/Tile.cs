@@ -49,9 +49,9 @@ public class Tile : MonoBehaviour {
                 player.MoreShots = false;
 
             if (c.Equals(Color.yellow))
-                Time.timeScale = .5f;
+                player.MoreFireRate = true;
             else
-                Time.timeScale = 1;
+                player.MoreFireRate = false;
             if (c.Equals(Color.white))
                 player.Invis = true;
             else
@@ -62,7 +62,7 @@ public class Tile : MonoBehaviour {
                 player.Dot = false;
                 player.MoreDmg = false;
                 player.MoreShots = false;
-                Time.timeScale = 1;
+                player.MoreFireRate = false;
                 player.Invis = false;
                 GetComponent<BoxCollider2D>().isTrigger = true;
                 player.MoreSpeed = false;

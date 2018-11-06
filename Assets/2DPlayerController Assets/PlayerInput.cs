@@ -12,6 +12,7 @@ public class PlayerInput : MonoBehaviour {
 
     MovingPlayer player;
     private float nextFire;
+    private float baseFireRate;
 
     public float fireRate;
 
@@ -23,6 +24,7 @@ public class PlayerInput : MonoBehaviour {
     {
         timeUntilSoundCounter = timeUntilSound;
         player = FindObjectOfType<MovingPlayer>();
+        baseFireRate = fireRate;
 	}
 	
 	// Update is called once per frame
@@ -37,8 +39,11 @@ public class PlayerInput : MonoBehaviour {
         //transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 
         timeUntilSoundCounter -= Time.deltaTime;
-
-        if (Input.GetButton("Fire1") && Time.time > nextFire)
+        if (player.MoreFireRate)
+            fireRate = baseFireRate / 1.5f; 
+        else
+            fireRate = baseFireRate;
+        if ((Input.GetButton("Fire1") && Time.time > nextFire)&&!player.Invis)
         {
             nextFire = Time.time + fireRate;
             laser.Play();
@@ -46,10 +51,10 @@ public class PlayerInput : MonoBehaviour {
             
             if (player.MoreShots)
             {
-                Vector3 forward1 = new Vector3(rota.x + .3f, rota.y + .3f, 10);
+                Vector3 forward1 = new Vector3(rota.x *-.8f, rota.y *-.8f, 10);
                 float f1m = (float)Math.Sqrt(Math.Pow(forward1.x, 2) + Math.Pow(forward1.y, 2));
                 forward1 = new Vector3(forward1.x / f1m, forward1.y / f1m, 10);
-                Vector3 forward2 = new Vector3(rota.x - .3f, rota.y - .3f, 10);
+                Vector3 forward2 = new Vector3(rota.x *.8f, rota.y *.8f, 10);
                 float f2m = (float)Math.Sqrt(Math.Pow(forward2.x, 2) + Math.Pow(forward2.y, 2));
                 forward2 = new Vector3(forward2.x / f2m, forward2.y / f2m, 10);
                 Instantiate(Shot, shotSpawn.position, Quaternion.LookRotation(forward1, Vector3.forward));

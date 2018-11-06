@@ -13,9 +13,12 @@ public class Lives : MonoBehaviour {
     public GameObject life2;
     public GameObject life3;
 
+    public HealthBarScript h;
+
     private void Start()
     {
-        script = FindObjectOfType<Score>();   
+        script = FindObjectOfType<Score>();
+        h = FindObjectOfType<HealthBarScript>();
     }
     private void Update()
     {

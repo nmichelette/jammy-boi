@@ -8,12 +8,27 @@ public class TileManage : MonoBehaviour {
     List<Tile> list1, list2, list3, list4;
     float tempRand, tempRand2, tempRand3, tempRand4;
     float timeUntilNextTiles,  timeAfterFirst;
+    private float timee;
 
     public float timeUntilTileChange;
     private bool firstDone, secondDone;
     MovingPlayer player;
-	// Use this for initialization
-	void Start () {
+
+    public float Timee
+    {
+        get
+        {
+            return timee;
+        }
+
+        set
+        {
+            timee = value;
+        }
+    }
+
+    // Use this for initialization
+    void Start () {
         player = FindObjectOfType<MovingPlayer>();
         tiles = GetComponentsInChildren<Tile>();
         list1 = new List<Tile>();
@@ -28,9 +43,9 @@ public class TileManage : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Mathf.Abs(player.GetComponent<Rigidbody2D>().velocity.x)>.05|| Mathf.Abs(player.GetComponent<Rigidbody2D>().velocity.x) > .05)
-            timeUntilNextTiles -= Time.deltaTime; 
-        
+        if ((Mathf.Abs(player.GetComponent<Rigidbody2D>().velocity.x)>1f|| Mathf.Abs(player.GetComponent<Rigidbody2D>().velocity.y) > 1f))
+            timeUntilNextTiles -= Time.deltaTime;
+        timee = timeUntilNextTiles / timeUntilTileChange;
 
         if (timeUntilNextTiles <= 0)
         {
