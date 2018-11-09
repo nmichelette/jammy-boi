@@ -51,14 +51,8 @@ public class PlayerInput : MonoBehaviour {
             
             if (player.MoreShots)
             {
-                Vector3 forward1 = new Vector3(rota.x *-.8f, rota.y *-.8f, 10);
-                float f1m = (float)Math.Sqrt(Math.Pow(forward1.x, 2) + Math.Pow(forward1.y, 2));
-                forward1 = new Vector3(forward1.x / f1m, forward1.y / f1m, 10);
-                Vector3 forward2 = new Vector3(rota.x *.8f, rota.y *.8f, 10);
-                float f2m = (float)Math.Sqrt(Math.Pow(forward2.x, 2) + Math.Pow(forward2.y, 2));
-                forward2 = new Vector3(forward2.x / f2m, forward2.y / f2m, 10);
-                Instantiate(Shot, shotSpawn.position, Quaternion.LookRotation(forward1, Vector3.forward));
-                Instantiate(Shot, shotSpawn.position, Quaternion.LookRotation(forward2, Vector3.forward));
+                Instantiate(Shot, shotSpawn.position, shotSpawn.rotation*Quaternion.Euler(0, 0, 350));
+                Instantiate(Shot, shotSpawn.position, shotSpawn.rotation*Quaternion.Euler(0, 0, 10));
             }
         }
 

@@ -2706,7 +2706,7 @@ Prefab:
     - target: {fileID: 114111743445286038, guid: 2d986ea1d8c6494419bc17d8affe9834,
         type: 2}
       propertyPath: fireRate
-      value: 0.001
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d986ea1d8c6494419bc17d8affe9834, type: 2}
@@ -7358,18 +7358,24 @@ Prefab:
     - target: {fileID: 114823627472116466, guid: 5e339b06fa5cfe54594ffc56303f4412,
         type: 2}
       propertyPath: phase2Length
-      value: 200
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114823627472116466, guid: 5e339b06fa5cfe54594ffc56303f4412,
         type: 2}
       propertyPath: phase1Length
-      value: 575
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114823627472116466, guid: 5e339b06fa5cfe54594ffc56303f4412,
         type: 2}
       propertyPath: speed
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114823627472116466, guid: 5e339b06fa5cfe54594ffc56303f4412,
+        type: 2}
+      propertyPath: Shot2
+      value: 
+      objectReference: {fileID: 1713440473172354, guid: 3c6da4b3bf9421341af8095977c94d60,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e339b06fa5cfe54594ffc56303f4412, type: 2}
   m_IsPrefabAsset: 0
